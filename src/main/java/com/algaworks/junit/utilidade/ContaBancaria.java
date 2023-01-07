@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class ContaBancaria {
 
     public ContaBancaria(BigDecimal saldo) {
-        //TODO 1 - validar saldo: não pode ser nulo, zero ou menor que zero, caso seja, deve lançar uma IllegalArgumentException
+        //TODO 1 - validar saldo: não pode ser nulo, caso seja, deve lançar uma IllegalArgumentException
         //TODO 2 - pode ser zero ou negativo
     }
 
