@@ -10,15 +10,14 @@ public class ContaBancaria {
     }
 
     public void saque(BigDecimal valor) {
-        //TODO 1 - validar valor: não pode ser nulo ou menor que zero, case seja deve lançar uma IllegalArgumentException
+        //TODO 1 - validar valor: não pode ser nulo ou zero, case seja deve lançar uma IllegalArgumentException
         //TODO 2 - Deve subtrair o valor do saldo
         //TODO 3 - Se o saldo for insuficiente deve lançar uma RuntimeException
     }
 
     public void deposito(BigDecimal valor) {
-        //TODO 1 - validar valor: não pode ser nulo ou menor que zero uma IllegalArgumentException
+        //TODO 1 - validar valor: não pode ser nulo ou zero, case seja deve lançar uma IllegalArgumentException
         //TODO 2 - Deve adicionar o valor ao saldo
-        //TODO 3 - Se o saldo for insuficiente deve lançar uma RuntimeException
     }
 
     public BigDecimal saldo() {
