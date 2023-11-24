@@ -23,4 +23,9 @@ class SaudacaoUtilTest {
         assertEquals("Hora inválida", illegalArgumentException.getMessage());
     }
 
+    @Test
+    public void naoDeveLancarException() {
+        assertDoesNotThrow(() -> SaudacaoUtil.saudar(0));
+    }
+
 }
