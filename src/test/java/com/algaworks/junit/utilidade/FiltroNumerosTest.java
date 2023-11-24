@@ -14,7 +14,7 @@ class FiltroNumerosTest {
     public void deveRetornarNumerosPares() {
 
         List<Integer> numeros = Arrays.asList(1, 2, 3, 4);
-        List<Integer> numerosParesEsperados = Arrays.asList(4, 2);
+        List<Integer> numerosParesEsperados = Arrays.asList(2, 4);
         List<Integer> resultadoFiltro = FiltroNumeros.numerosPares(numeros);
 
         //verificar tanto do conteúdo quanto da ordem
