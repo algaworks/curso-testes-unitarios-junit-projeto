@@ -14,7 +14,7 @@ class PessoaTest {
         assertAll(
                 "Asserções de pessoa",
                 ()-> assertEquals("Alex", pessoa.getNome()),
-                ()-> assertEquals("Silva", pessoa.getSobrenome()));
+                ()-> assertEquals("Carvalho", pessoa.getSobrenome()));
 
         // assertAll faz a mesma coisa que o AssertEquals, porém a maior vantagem neste caso que ele executa todos
         // para depois apresentar o erro de ambos, caso ambos estajam com erro, não parando na primeira asserção.
