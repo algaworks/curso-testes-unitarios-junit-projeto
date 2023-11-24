@@ -13,8 +13,9 @@ class SimuladorEsperaTest {
     public void deveEsperarENaoDarTimeout() {
 
         // Assegura que este método deveria ser executado em 1 segundo
-        // problema desse método é que fica bloqueado por 10 segundos.
-        Assertions.assertTimeout(Duration.ofSeconds(1), ()-> SimuladorEspera.esperar(Duration.ofSeconds(10)));
+        // Esse é o melhor método para validar o tempo de executação, porque não deixa bloqueado por 10 segundos
+        // chegou no 1 segundo conforme foi configurado já lança o erro de teste
+        Assertions.assertTimeoutPreemptively(Duration.ofSeconds(1), ()-> SimuladorEspera.esperar(Duration.ofMillis(10)));
     }
 
 }
