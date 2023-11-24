@@ -18,7 +18,7 @@ class FiltroNumerosTest {
         List<Integer> resultadoFiltro = FiltroNumeros.numerosPares(numeros);
 
         //verificar tanto do conteúdo quanto da ordem
-        Assertions.assertIterableEquals(numerosParesEsperados, resultadoFiltro);
+        Assertions.assertArrayEquals(numerosParesEsperados.toArray(new Object[]{}), resultadoFiltro.toArray(new Object[]{}));
 
     }
 
