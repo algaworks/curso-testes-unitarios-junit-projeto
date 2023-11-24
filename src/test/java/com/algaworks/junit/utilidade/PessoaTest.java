@@ -8,6 +8,7 @@ class PessoaTest {
 
     @Test
     public void assercaoAgrupada() {
+
         Pessoa pessoa = new Pessoa("Alex", "Carvalho");
 
         assertAll(
