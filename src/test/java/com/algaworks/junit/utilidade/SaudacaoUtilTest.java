@@ -14,4 +14,9 @@ class SaudacaoUtilTest {
         assertEquals("Bom dia", saudacao, "Saudação incorreta!");
     }
 
+    @Test
+    public void deveLancarException() {
+        assertThrows(IllegalArgumentException.class, ()-> SaudacaoUtil.saudar(-10));
+    }
+
 }
