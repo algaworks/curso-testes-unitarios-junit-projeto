@@ -1,0 +1,8 @@
+2.11. Executando testes via Maven:
+Desabilitando a execução de teste via maven.
+Windows
+`mvn clean package '-Dmaven.test.skip=true'`
+
+Linux
+`mvn clean package -Dmaven.test.skip=true'
+___________________________________________
