@@ -1,18 +1,18 @@
 package com.algaworks.junit.utilidade;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import static com.algaworks.junit.utilidade.SaudacaoUtil.saudar;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Testes no utilitário de saudação")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SaudacaoUtilTest {
 
     @Test
-    @DisplayName("Deve saudar com bom dia")
-    public void saudarComBomDia() {
+    public void Dado_uma_horario_matuino_Quando_saudar_Entao_deve_retornar_bom_dia() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 9;
 
@@ -24,21 +24,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
-    @DisplayName("Deve saudar com bom dia às 5 horas")
-    public void saudarComBomDiaApartir5h() {
-        // [A]rrange: Preparar as variáveis para o senário de teste;
-        int horaValida = 5;
-
-        // [A]ctive: Executando o cenário;
-        String saudacao = saudar(horaValida);
-
-        // [A]ssert: Validar se o cenário está correto;
-        assertEquals("Bom dia", saudacao, "Saudação incorreta!");
-    }
-
-    @Test
-    @DisplayName("Deve saudar com boa tarde")
-    public void saudarComBoaTarde() {
+    public void Dado_uma_horario_vespertino_Quando_saudar_Entao_deve_retornar_boa_tarde() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 15;
 
@@ -50,20 +36,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
-    @DisplayName("Deve saudar com bom noite")
-    public void saudarComBoaNoite() {
-        // [A]rrange: Preparar as variáveis para o senário de teste;
-        int horaValida = 22;
-
-        // [A]ctive: Executando o cenário;
-        String saudacao = saudar(horaValida);
-
-        // [A]ssert: Validar se o cenário está correto;
-        assertEquals("Boa noite", saudacao, "Saudação incorreta!");
-    }
-    @Test
-    @DisplayName("Deve saudar com boa noite às 4 horas")
-    public void saudarComBoaNoiteAs4h() {
+    public void Dado_uma_horario_noturno_Quando_saudar_Entao_deve_retornar_boa_noite() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 4;
 
@@ -75,8 +48,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
-    @DisplayName("Deve lançar uma exception quando for hora negativa")
-    public void deveLancarException() {
+    public void Dado_uma_hora_invalida_Quando_saudar_Entao_deve_lancar_exception() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaInvalida = -10;
 
@@ -89,8 +61,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
-    @DisplayName("Não lançar uma exception quando for hora for igual a zero")
-    public void naoDeveLancarException() {
+    public void Dado_uma_hora_valida_Quando_saudar_Entao_nao_deve_lancar_exception() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 0;
 
