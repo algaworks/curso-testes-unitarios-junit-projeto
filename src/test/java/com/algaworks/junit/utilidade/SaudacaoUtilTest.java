@@ -1,14 +1,17 @@
 package com.algaworks.junit.utilidade;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import static com.algaworks.junit.utilidade.SaudacaoUtil.saudar;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Testes no utilitário de saudação")
 class SaudacaoUtilTest {
 
     @Test
+    @DisplayName("Deve saudar com bom dia")
     public void saudarComBomDia() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 9;
@@ -21,6 +24,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve saudar com bom dia às 5 horas")
     public void saudarComBomDiaApartir5h() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 5;
@@ -33,6 +37,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve saudar com boa tarde")
     public void saudarComBoaTarde() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 15;
@@ -45,6 +50,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve saudar com bom noite")
     public void saudarComBoaNoite() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 22;
@@ -56,6 +62,7 @@ class SaudacaoUtilTest {
         assertEquals("Boa noite", saudacao, "Saudação incorreta!");
     }
     @Test
+    @DisplayName("Deve saudar com boa noite às 4 horas")
     public void saudarComBoaNoiteAs4h() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 4;
@@ -68,6 +75,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve lançar uma exception quando for hora negativa")
     public void deveLancarException() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaInvalida = -10;
@@ -81,6 +89,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Não lançar uma exception quando for hora for igual a zero")
     public void naoDeveLancarException() {
         // [A]rrange: Preparar as variáveis para o senário de teste;
         int horaValida = 0;
