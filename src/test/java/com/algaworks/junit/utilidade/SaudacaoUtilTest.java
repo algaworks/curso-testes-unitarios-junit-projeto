@@ -1,57 +1,95 @@
 package com.algaworks.junit.utilidade;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
+import static com.algaworks.junit.utilidade.SaudacaoUtil.saudar;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SaudacaoUtilTest {
 
     @Test
     public void saudarComBomDia() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 9;
 
-        String saudacao = SaudacaoUtil.saudar(9);
+        // [A]ctive: Executando o cenário;
+        String saudacao = saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
         assertEquals("Bom dia", saudacao, "Saudação incorreta!");
     }
 
     @Test
     public void saudarComBomDiaApartir5h() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 5;
 
-        String saudacao = SaudacaoUtil.saudar(5);
+        // [A]ctive: Executando o cenário;
+        String saudacao = saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
         assertEquals("Bom dia", saudacao, "Saudação incorreta!");
     }
 
     @Test
     public void saudarComBoaTarde() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 15;
 
-        String saudacao = SaudacaoUtil.saudar(15);
+        // [A]ctive: Executando o cenário;
+        String saudacao = saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
         assertEquals("Boa tarde", saudacao, "Saudação incorreta!");
     }
 
     @Test
     public void saudarComBoaNoite() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 22;
 
-        String saudacao = SaudacaoUtil.saudar(22);
+        // [A]ctive: Executando o cenário;
+        String saudacao = saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
         assertEquals("Boa noite", saudacao, "Saudação incorreta!");
     }
     @Test
     public void saudarComBoaNoiteAs4h() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 4;
 
-        String saudacao = SaudacaoUtil.saudar(4);
+        // [A]ctive: Executando o cenário;
+        String saudacao = saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
         assertEquals("Boa noite", saudacao, "Saudação incorreta!");
     }
 
     @Test
     public void deveLancarException() {
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaInvalida = -10;
 
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
-                ()-> SaudacaoUtil.saudar(-10));
+        // [A]ctive: Executando o cenário;
+        Executable chamadaInvalidaDeMetodo = ()-> saudar(horaInvalida);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, chamadaInvalidaDeMetodo);
 
-        assertEquals("Hora invalida", illegalArgumentException.getMessage());
+        // [A]ssert: Validar se o cenário está correto;
+        assertEquals("Hora invalida", e.getMessage());
     }
 
     @Test
     public void naoDeveLancarException() {
-        assertDoesNotThrow(() -> SaudacaoUtil.saudar(0));
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        int horaValida = 0;
+
+        // [A]ctive: Executando o cenário;
+        Executable  chamadaValidaDeMetodo = () -> saudar(horaValida);
+
+        // [A]ssert: Validar se o cenário está correto;
+        assertDoesNotThrow(chamadaValidaDeMetodo);
     }
 
 }
