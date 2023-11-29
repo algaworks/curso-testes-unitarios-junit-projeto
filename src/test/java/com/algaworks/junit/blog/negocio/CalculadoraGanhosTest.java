@@ -4,14 +4,12 @@ import com.algaworks.junit.blog.modelo.Editor;
 import com.algaworks.junit.blog.modelo.Ganhos;
 import com.algaworks.junit.blog.modelo.Post;
 import com.algaworks.junit.blog.utilidade.ProcessadorTextoSimples;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CalculadoraGanhosTest {
 
     static CalculadoraGanhos calculadora;
@@ -47,25 +45,33 @@ class CalculadoraGanhosTest {
 //    }
 
     @Test
-    public void deveCalcularGanhos() {
+    public void Dado_um_post_e_autor_premium_Quando_calcular_ganhos_Entao_retorna_valor_com_bonus() {
 
         Ganhos ganhos = calculadora.calcular(post);
-
         assertEquals(new BigDecimal("45"), ganhos.getTotalGanho());
+    }
+
+    @Test
+    public void Dado_um_post_e_autor_Quando_calcular_ganhos_Entao_retorna_quantidade_de_palavras() {
+
+        Ganhos ganhos = calculadora.calcular(post);
         assertEquals(7, ganhos.getQuantidadePalavras());
+    }
+
+    @Test
+    public void Dado_um_post_e_autor_Quando_calcular_ganhos_Entao_deve_retorna_valor_pago_por_palavra_do_autor() {
+
+        Ganhos ganhos = calculadora.calcular(post);
         assertEquals(autor.getValorPagoPorPalavra(), ganhos.getValorPagoPorPalavra());
     }
 
     @Test
-    public void deveCalcularGanhosSemPremium() {
+    public void Dado_um_post_e_autor_que_nao_premium_Quando_calcular_ganhos_Entao_deve_retornar_valor_sem_bonus() {
 
         autor.setPremium(false);
 
         Ganhos ganhos = calculadora.calcular(post);
-
         assertEquals(new BigDecimal("35"), ganhos.getTotalGanho());
-        assertEquals(7, ganhos.getQuantidadePalavras());
-        assertEquals(autor.getValorPagoPorPalavra(), ganhos.getValorPagoPorPalavra());
     }
 
 }
