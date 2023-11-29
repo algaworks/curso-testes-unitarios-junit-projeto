@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 @DisplayName("Carrinho de Compra")
 class CarrinhoCompraAlexTest {
 
@@ -27,7 +27,7 @@ class CarrinhoCompraAlexTest {
         @DisplayName("Quando")
         void beforeEach() {
 
-            System.out.println("Antes de cada teste");
+            System.out.println("Antes de cada teste, CarrinhoCompraComItens.");
 
             cliente = new Cliente(1L, "Alex");
 
@@ -99,5 +99,42 @@ class CarrinhoCompraAlexTest {
 
     }
 
+    @Nested
+    @DisplayName("[Cenário]-Dado um carrinho de compra com 0 itens")
+    class CarrinhoCompraSemItens {
+
+        private CarrinhoCompra carrinhoCompra;
+        private Cliente cliente;
+        private List<ItemCarrinhoCompra> itens = new ArrayList<>();
+
+        // [A]rrange: Preparar as variáveis para o senário de teste;
+        @BeforeEach
+        @DisplayName("Quando")
+        void beforeEach() {
+
+            System.out.println("Antes de cada teste CarrinhoCompraSemItens");
+
+            cliente = new Cliente(1L, "Alex");
+            carrinhoCompra = new CarrinhoCompra(cliente, itens);
+
+        }
+
+        // [A]ctive: Executando o cenário;
+        @Nested
+        @DisplayName("->Condições: Quando adicionar produto com quantidade 1")
+        class AdicionarProduto {
+
+            // [A]ssert: Validar se o cenário está correto;
+            @Test
+            @DisplayName("Então deve lançar Exception")
+            void naoDeveLancarSaqueSemException() {
+
+                assertThrows(RuntimeException.class,
+                        ()-> carrinhoCompra.adicionarProduto(null, 0));
+            }
+
+        }
+
+    }
 
 }
