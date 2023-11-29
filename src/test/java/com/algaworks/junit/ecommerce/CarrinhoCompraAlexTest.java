@@ -97,6 +97,43 @@ class CarrinhoCompraAlexTest {
             }
         }
 
+        @Nested
+        @DisplayName("->Condições: Quando remover produto do carrinho")
+        class RemoverProduto {
+
+            private Produto produto = new Produto(1L,"Pão integral",
+                            "Pão Integral", new BigDecimal("10.00"));
+
+            @Test
+            @DisplayName("Então não deve lançar Exception")
+            void naoDeveLancarException() {
+                assertDoesNotThrow(()-> carrinhoCompra.removerProduto(produto));
+            }
+
+            @Test
+            @DisplayName("Então se produto não existir, deve retornar uma exception")
+            void deveLancarExceptionCasoProdutoNaoExista() {
+
+                Produto produto = new Produto(10L,"Pão integral",
+                        "Pão Integral", new BigDecimal("10.00"));
+
+                assertThrows(RuntimeException.class, ()-> carrinhoCompra.removerProduto(produto));
+            }
+
+            @Test
+            @DisplayName("Então deve remover o produto independente da quantidade")
+            void deveRemoverProdutoIndependenteQuantidade() {
+
+                Produto produto = new Produto(1L,"Pão integral",
+                        "Pão Integral", new BigDecimal("10.00"));
+
+                carrinhoCompra.removerProduto(produto);
+
+                assertEquals(1,  carrinhoCompra.getItens().size());
+            }
+
+        }
+
     }
 
     @Nested
