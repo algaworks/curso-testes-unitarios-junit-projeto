@@ -6,3 +6,5 @@ Windows
 Linux
 `mvn clean package -Dmaven.test.skip=true'
 ___________________________________________
+
+MÓDULO-4: Stub, Mock e Spy
