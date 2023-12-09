@@ -3,19 +3,18 @@ package com.algaworks.junit.blog.negocio;
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
 import com.algaworks.junit.blog.modelo.Editor;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Objects.isNull;
-
-/**
- * Implementação Sub, ou seja, Duble, ficticia
- */
 public class ArmazenamentoEditorFixoEmMemoria implements ArmazenamentoEditor {
+
+    public boolean chamouSalvar;
 
     @Override
     public Editor salvar(Editor editor) {
-        if (isNull(editor)) {
+        this.chamouSalvar = true;
+        if (editor.getId() == null) {
             editor.setId(1L);
         }
         return editor;
@@ -28,6 +27,9 @@ public class ArmazenamentoEditorFixoEmMemoria implements ArmazenamentoEditor {
 
     @Override
     public Optional<Editor> encontrarPorEmail(String email) {
+        if (email.equals("alex.existe@email.com")) {
+            return Optional.of(new Editor(2L, "Alex", "alex.existe@email.com", BigDecimal.TEN, true));
+        }
         return Optional.empty();
     }
 

@@ -8,3 +8,13 @@ Linux
 ___________________________________________
 
 MÓDULO-4: Stub, Mock e Spy
+
+Teste unitários padrão triplo A.
+// [A]rrange: Preparar as variáveis para o senário de teste;
+// [A]ctive: Executando o cenário;
+// [A]ssert: Validar se o cenário está correto;
+
+Como implementar classe de testes que possuim dependências.
+- Pode ser uma interface ou classe comum;
+Para solucionar o problema deve ser criado um Stub ou pode ser chamado de duble,
+ajuda isolar teste unitários

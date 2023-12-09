@@ -1,43 +1,64 @@
 package com.algaworks.junit.blog.negocio;
 
+import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.*;
+
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CadastroEditorTest {
 
-    static CadastroEditor cadastroEditor;
+    CadastroEditor cadastroEditor;
+    ArmazenamentoEditorFixoEmMemoria armazenamentoEditor;
     Editor editor;
 
     //Executa antes de todos os testes
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void beforeEach() {
+        editor = new Editor(null, "Alex", "alex@email.com", BigDecimal.TEN, true);
 
-        System.out.println("@BeforeAll: Antes de todos os testes");
+        armazenamentoEditor = new ArmazenamentoEditorFixoEmMemoria();
 
         cadastroEditor = new CadastroEditor(
-            new ArmazenamentoEditorFixoEmMemoria(),
-            new GerenciadorEnvioEmail() {
-
-                @Override
-                void enviarEmail(Mensagem mensagem) {
-                    System.out.println("Enviando mensagem para: "+mensagem.getDestinatario());
+                armazenamentoEditor,
+                new GerenciadorEnvioEmail() {
+                    @Override
+                    void enviarEmail(Mensagem mensagem) {
+                        System.out.println("Enviando mensagem para: " + mensagem.getDestinatario());
+                    }
                 }
-            }
         );
     }
 
-    // Preparar as variáveis para o senário de teste;
-    @BeforeEach
-    void beforeEach() {
+    @Test
+    public void Dado_um_editor_valido_Quando_criar_Entao_deve_retornar_um_id_de_cadastro() {
+        Editor editorSalvo = cadastroEditor.criar(editor);
+        assertEquals(1L, editorSalvo.getId());
+        assertTrue(armazenamentoEditor.chamouSalvar);
+    }
 
-        // [A]rrange: Preparar as variáveis para o senário de teste;
-        System.out.println("@BeforeEach: Executa antes de cada teste");
+    @Test
+    public void Dado_um_editor_null_Quando_criar_Entao_deve_lancar_exception() {
+        assertThrows(NullPointerException.class, ()-> cadastroEditor.criar(null));
+        assertFalse(armazenamentoEditor.chamouSalvar);
+    }
 
-      editor = new Editor();
+    @Test
+    void Dado_um_editor_com_email_existente_Quando_criar_Entao_deve_lancar_exception() {
+        editor.setEmail("alex.existe@email.com");
+        assertThrows(RegraNegocioException.class, ()-> cadastroEditor.criar(editor));
+    }
+
+    @Test
+    void Dado_um_editor_com_email_existente_Quando_criar_Entao_nao_deve_salvar() {
+        editor.setEmail("alex.existe@email.com");
+        try {
+            cadastroEditor.criar(editor);
+        } catch (RegraNegocioException e) { }
+        assertFalse(armazenamentoEditor.chamouSalvar);
     }
 
 }
