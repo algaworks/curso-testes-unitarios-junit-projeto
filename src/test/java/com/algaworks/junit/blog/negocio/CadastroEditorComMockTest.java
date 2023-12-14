@@ -42,7 +42,13 @@ public class CadastroEditorComMockTest {
         // Quando você chamar o editor armazenamentoEditor.salvar
         // Então deve retornar
         Mockito.when(armazenamentoEditor.salvar(editor))
-            .thenReturn(new Editor(1L, "Alex", "alex@email.com", BigDecimal.TEN, true));
+            .thenAnswer(invocacao -> {
+                // Adicionando comportamento dinâmico
+                Editor editorPassado = invocacao.getArgument(0, Editor.class);
+                editorPassado.setId(1L);
+                return editorPassado;
+
+            });
     }
 
     @Test
