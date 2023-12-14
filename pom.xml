@@ -29,7 +29,7 @@
 
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>org.mockito-core</artifactId>
+			<artifactId>mockito-core</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
