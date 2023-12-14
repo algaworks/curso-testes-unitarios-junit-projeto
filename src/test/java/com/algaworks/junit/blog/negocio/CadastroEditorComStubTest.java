@@ -2,14 +2,17 @@ package com.algaworks.junit.blog.negocio;
 
 import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class CadastroEditorTest {
+class CadastroEditorComStubTest {
 
     CadastroEditor cadastroEditor;
     ArmazenamentoEditorFixoEmMemoria armazenamentoEditor;
