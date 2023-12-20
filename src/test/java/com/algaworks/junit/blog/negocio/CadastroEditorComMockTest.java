@@ -41,7 +41,7 @@ public class CadastroEditorComMockTest {
         // Definindo comportamento do Mock
         // Quando você chamar o editor armazenamentoEditor.salvar
         // Então deve retornar
-        Mockito.when(armazenamentoEditor.salvar(editor))
+        Mockito.when(armazenamentoEditor.salvar(Mockito.any(Editor.class)))
             .thenAnswer(invocacao -> {
                 // Adicionando comportamento dinâmico
                 Editor editorPassado = invocacao.getArgument(0, Editor.class);
