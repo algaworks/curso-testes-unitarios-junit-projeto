@@ -58,4 +58,14 @@ public class CadastroEditorComMockTest {
         assertEquals(1L, editorSalvo.getId());
     }
 
+    // Verificando chamada de métodos com mock usando Mockito verify
+    @Test
+    void Dado_um_editor_valido_Quando_criar_Entao_deve_chamar_metodo_salvar_do_armazenamento(){
+
+        cadastroEditor.criar(editor);
+        Mockito.verify(armazenamentoEditor, Mockito.times(1))
+                .salvar(Mockito.eq(editor));
+    }
+
+
 }
