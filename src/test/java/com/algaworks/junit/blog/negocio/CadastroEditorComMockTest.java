@@ -78,4 +78,14 @@ public class CadastroEditorComMockTest {
                 () -> assertThrows(RuntimeException.class, ()-> cadastroEditor.criar(editor)),
                 () -> Mockito.verify(gerenciadorEnvioEmail, Mockito.never()).enviarEmail(Mockito.any()));
     }
+
+    @Test
+    void Dado_um_editor_valido_Quando_cadastrar_Entao_deve_enviar_email_com_destino_ao_editor() {
+
+        Editor editorSalvo = cadastroEditor.criar(editor);
+        Mockito.verify(gerenciadorEnvioEmail).enviarEmail(mensagemArgumentCaptor.capture());
+        Mensagem mensagem = mensagemArgumentCaptor.getValue();
+
+        assertEquals(editorSalvo.getEmail(), mensagem.getDestinatario());
+    }
 }
