@@ -101,6 +101,7 @@ public class CadastroEditorComMockTest {
 
     @Test
     void Dado_um_editor_com_email_existente_Quando_cadastrar_Entao_deve_lancar_exception() {
+        
         Mockito.when(armazenamentoEditor.encontrarPorEmail("alex@email.com"))
                 .thenReturn(Optional.empty())
                 .thenReturn(Optional.of(editor));
