@@ -1,6 +1,7 @@
 package com.algaworks.junit.blog.negocio;
 
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
+import com.algaworks.junit.blog.exception.EditorNaoEncontradoException;
 import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
 import org.junit.jupiter.api.*;
@@ -12,13 +13,11 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ExtendWith(MockitoExtension.class)
 public class CadastroEditorComMockTest {
-
-    @Spy
-    Editor editor = new Editor(null, "Alex", "alex@email.com", BigDecimal.TEN, true);
 
     @Captor
     ArgumentCaptor<Mensagem> mensagemArgumentCaptor;
@@ -36,6 +35,10 @@ public class CadastroEditorComMockTest {
 
     @Nested
     class CadastroComEditorValido {
+
+        @Spy
+        Editor editor = new Editor(null, "Alex", "alex@email.com", BigDecimal.TEN, true);
+
         @BeforeEach
         void init() {
 
@@ -64,7 +67,7 @@ public class CadastroEditorComMockTest {
         void Dado_um_editor_valido_Quando_criar_Entao_deve_chamar_metodo_salvar_do_armazenamento() {
 
             cadastroEditor.criar(editor);
-            Mockito.verify(armazenamentoEditor, Mockito.times(1))
+            Mockito.verify(armazenamentoEditor, times(1))
                     .salvar(Mockito.eq(editor));
         }
 
@@ -117,8 +120,8 @@ public class CadastroEditorComMockTest {
             cadastroEditor.criar(editor);
 
             InOrder inOrder = Mockito.inOrder(armazenamentoEditor, gerenciadorEnvioEmail);
-            inOrder.verify(armazenamentoEditor, Mockito.times(1)).salvar(editor);
-            inOrder.verify(gerenciadorEnvioEmail, Mockito.times(1)).enviarEmail(Mockito.any(Mensagem.class));
+            inOrder.verify(armazenamentoEditor, times(1)).salvar(editor);
+            inOrder.verify(gerenciadorEnvioEmail, times(1)).enviarEmail(Mockito.any(Mensagem.class));
         }
     }
 
@@ -148,5 +151,82 @@ public class CadastroEditorComMockTest {
         }
     }
 
+    @Nested
+    class EdicaoComEditorValido {
+
+        @Spy
+        // A anotação '@Spy' é usada para criar um objeto 'spy' do Mockito.
+        // Isso permite que você monitore as chamadas aos métodos reais do objeto enquanto mantém o comportamento original.
+        // Esta é a instância do objeto 'Editor' que será usada nos testes.
+        Editor editor = new Editor(1L, "Alex", "alex@email.com", BigDecimal.TEN, true);
+
+        @BeforeEach
+        // A anotação '@BeforeEach' indica que o método a seguir será executado antes de cada teste.
+        // Este método é chamado antes de cada teste para configurar condições comuns.
+        void init() {
+
+            // Configura um comportamento mock para o método 'salvar' de 'armazenamentoEditor'.
+            // Quando 'salvar' é chamado com 'editor', ele retorna o próprio 'editor'.
+            Mockito.when(armazenamentoEditor.salvar(editor)).thenAnswer(invocacao -> invocacao.getArgument(0, Editor.class));
+
+            // Configura um comportamento mock para o método 'encontrarPorId'.
+            // Quando chamado com o ID 1, ele retorna um Optional contendo o 'editor'.
+            Mockito.when(armazenamentoEditor.encontrarPorId(1L)).thenReturn(Optional.of(editor));
+
+        }
+
+        @Test
+        void Dado_um_editor_valido_Quando_editar_Entao_deve_alterar_editor_salvo() {
+
+            // Cria uma nova instância de 'Editor' para simular a edição de um editor existente.
+            Editor editorAtualizado = new Editor(1L, "Alex Silva", "alex.silva@email.com", BigDecimal.ZERO, false);
+
+            // Chama o método 'editar' do objeto 'cadastroEditor' com o 'editorAtualizado'.
+            cadastroEditor.editar(editorAtualizado);
+
+            // Verifica se o método 'atualizarComDados' foi chamado exatamente uma vez no objeto 'editor'.
+            Mockito.verify(editor, times(1)).atualizarComDados(editorAtualizado);
+
+            // Cria um objeto 'InOrder' para verificar a ordem das chamadas nos mocks.
+            InOrder inOrder = Mockito.inOrder(editor, armazenamentoEditor);
+
+            // Verifica se 'atualizarComDados' foi chamado no 'editor'.
+            inOrder.verify(editor).atualizarComDados(editorAtualizado);
+
+            // Verifica se 'salvar' foi chamado em 'armazenamentoEditor' com o objeto 'editor'.
+            inOrder.verify(armazenamentoEditor).salvar(editor);
+
+        }
+    }
+
+
+    @Nested
+    class EdicaoComEditorInexistente {
+
+        // Cria uma instância de 'Editor' que será usada nos testes.
+        // O 'Editor' tem um ID que presumivelmente não existe no sistema (99L).
+        Editor editor = new Editor(99L, "Alex", "alex@email.com", BigDecimal.TEN, true);
+
+        @BeforeEach
+        // Anotação que indica que este método será executado antes de cada teste.
+        void init() {
+
+            // Configura um comportamento mock para o método 'encontrarPorId' de 'armazenamentoEditor'.
+            // Quando chamado com ID 99L, ele retornará um 'Optional' vazio, simulando que o editor não existe.
+            Mockito.when(armazenamentoEditor.encontrarPorId(99L)).thenReturn(Optional.empty());
+        }
+
+        @Test
+        void Dado_um_editor_que_nao_exista_Quando_editar_Entao_deve_lancar_exception() {
+
+            // Verifica se uma 'EditorNaoEncontradoException' é lançada ao tentar editar um 'editor' que não existe.
+            assertThrows(EditorNaoEncontradoException.class, ()-> cadastroEditor.editar(editor));
+
+            // Usa o Mockito para verificar que o método 'salvar' nunca é chamado em 'armazenamentoEditor'.
+            // Isso assegura que nenhuma ação de salvar ocorre quando um editor inexistente é editado.
+            verify(armazenamentoEditor, never()).salvar(Mockito.any(Editor.class));
+
+        }
+    }
 
 }
