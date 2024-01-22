@@ -37,7 +37,7 @@ public class CadastroEditorComMockTest {
     class CadastroComEditorValido {
 
         @Spy
-        Editor editor = EditorTestData.umEditorNovo();
+        Editor editor = EditorTestData.umEditorNovo().build();
 
         @BeforeEach
         void init() {
@@ -108,7 +108,7 @@ public class CadastroEditorComMockTest {
                     .thenReturn(Optional.empty())
                     .thenReturn(Optional.of(editor));
 
-            Editor editorComEmailExistente = EditorTestData.umEditorNovo();
+            Editor editorComEmailExistente = EditorTestData.umEditorNovo().build();
 
             cadastroEditor.criar(editor);
             assertThrows(RegraNegocioException.class, ()-> cadastroEditor.criar(editorComEmailExistente));
@@ -158,7 +158,7 @@ public class CadastroEditorComMockTest {
         // A anotação '@Spy' é usada para criar um objeto 'spy' do Mockito.
         // Isso permite que você monitore as chamadas aos métodos reais do objeto enquanto mantém o comportamento original.
         // Esta é a instância do objeto 'Editor' que será usada nos testes.
-        Editor editor = EditorTestData.umEditorExistente();
+        Editor editor = EditorTestData.umEditorExistente().build();
 
         @BeforeEach
         // A anotação '@BeforeEach' indica que o método a seguir será executado antes de cada teste.
@@ -179,12 +179,12 @@ public class CadastroEditorComMockTest {
         void Dado_um_editor_valido_Quando_editar_Entao_deve_alterar_editor_salvo() {
 
             // Cria uma nova instância de 'Editor' para simular a edição de um editor existente.
-            Editor editorAtualizado = EditorTestData.umEditorExistente();
-
-            editorAtualizado.setNome("Alex Silva");
-            editorAtualizado.setEmail("alex.silva@email.com");
-            editorAtualizado.setValorPagoPorPalavra(BigDecimal.ZERO);
-            editorAtualizado.setPremium(false);
+            Editor editorAtualizado = EditorTestData.umEditorExistente()
+                    .comNome("Alex Silva")
+                    .comEmail("alex.silva@email.com")
+                    .comValorPagoPorPalavra(BigDecimal.ZERO)
+                    .comPremium(false)
+                    .build();
 
             // Chama o método 'editar' do objeto 'cadastroEditor' com o 'editorAtualizado'.
             cadastroEditor.editar(editorAtualizado);
@@ -210,7 +210,7 @@ public class CadastroEditorComMockTest {
 
         // Cria uma instância de 'Editor' que será usada nos testes.
         // O 'Editor' tem um ID que presumivelmente não existe no sistema (99L).
-        Editor editor = EditorTestData.umEditorComIdInexistente();
+        Editor editor = EditorTestData.umEditorComIdInexistente().build();
 
         @BeforeEach
         // Anotação que indica que este método será executado antes de cada teste.

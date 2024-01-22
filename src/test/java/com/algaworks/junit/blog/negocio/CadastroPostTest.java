@@ -42,7 +42,7 @@ class CadastroPostTest {
 
     @Spy
     // Espião do objeto 'Editor' para monitorar suas interações.
-    Editor editor = new Editor(1L, "Alex", "alex@email.com", BigDecimal.TEN, true);
+    Editor editor = EditorTestData.umEditorExistente().build();
 
     @Nested
     // Classe aninhada para testar a funcionalidade de cadastro de posts.
@@ -50,7 +50,7 @@ class CadastroPostTest {
 
         @Spy
         // Espião do objeto 'Post' para monitorar suas interações durante os testes de cadastro.
-        Post post = new Post("Olá mundo Java", "Olá Java com System.out.println", editor, true, true);
+        Post post = CadastroPostTestData.umPostNovo().build();
 
         // Métodos de teste para diferentes cenários de cadastro de posts:
 
@@ -360,16 +360,7 @@ class CadastroPostTest {
 
         @Spy
         // Espião do objeto 'Post' para monitorar suas interações durante os testes de edição.
-        Post post = new Post(
-                1L,"Olá mundo Java","Olá Java com System.out.println", editor, "ola-mundo-java",
-                new Ganhos(
-                        BigDecimal.TEN,
-                        4,
-                        BigDecimal.valueOf(10)
-                ),
-                true,
-                true
-        );
+        Post post = CadastroPostTestData.umPostExistente().build();
 
         // Métodos de teste para diferentes cenários de edição de posts:
 
@@ -425,7 +416,6 @@ class CadastroPostTest {
         // Teste para verificar se, ao editar um post que já é pago, os ganhos previamente calculados não são recalculados.
         // Isso garante que a lógica de negócios para posts pagos está sendo seguida corretamente.
         public void Dado_um_post_pago__Quando_editar__Entao_deve_retornar_post_com_os_mesmos_ganhos_sem_recalcular() {
-
 
             post.setConteudo("Conteúdo editado");
             // Atualiza o conteúdo do 'post' para simular uma edição.
@@ -515,7 +505,7 @@ class CadastroPostTest {
         // Isso é importante para manter a consistência dos URLs e para SEO, já que mudanças frequentes no slug podem prejudicar a rastreabilidade do post.
         public void Dado_um_post_com_titulo_alterado__Quando_editar__Entao_deve_retornar_post_com_a_mesma_slug_sem_alterar() {
 
-            post.setTitulo("Ola Teste");
+            //post.setTitulo("Ola Teste");
             // Altera o título do 'post' para simular uma edição real.
 
             Mockito.when(armazenamentoPost.salvar(Mockito.any(Post.class))).then(invocacao -> invocacao.getArgument(0, Post.class));
@@ -560,10 +550,10 @@ class CadastroPostTest {
         // Este teste assegura que as alterações feitas em um post são refletidas corretamente após a edição.
         public void Dado_um_post_valido__Quando_editar__Entao_deve_deve_alterar_post_salvo() {
 
-            Post postAlterado = new Post(
-                    1L, "Olá Java", "Olá Java", editor, "ola-mundo-java",
-                    new Ganhos(BigDecimal.TEN, 4, BigDecimal.valueOf(10)),
-                    true, true);
+            Post postAlterado = CadastroPostTestData.umPostExistente()
+                    .comTitulo("Olá Java")
+                    .comConteudo("Olá Java")
+                    .build();
             // Cria uma nova instância de 'Post' para simular os dados alterados de um post existente.
 
             Mockito.when(armazenamentoPost.salvar(Mockito.any(Post.class)))

@@ -11,20 +11,23 @@ public class EditorTestData {
     private EditorTestData() {
     }
 
-    public static Editor umEditorNovo() {
-
-        return new Editor(null, "Alex", "alex@email.com", BigDecimal.TEN, true);
+    public static Editor.Builder umEditorNovo() {
+        return Editor.builder()
+                .comNome("Alex")
+                .comEmail("alex@email.com")
+                .comValorPagoPorPalavra(BigDecimal.TEN)
+                .comPremium(true);
 
     }
 
-    public static Editor umEditorExistente() {
+    public static Editor.Builder umEditorExistente() {
 
-        return new Editor(1L, "Alex", "alex@email.com", BigDecimal.TEN, true);
+        return umEditorNovo().comId(1L);
     }
 
-    public static Editor umEditorComIdInexistente() {
+    public static Editor.Builder umEditorComIdInexistente() {
 
-        return new Editor(99L, "Alex", "alex@email.com", BigDecimal.TEN, true);
+        return umEditorNovo().comId(99L);
     }
 
 

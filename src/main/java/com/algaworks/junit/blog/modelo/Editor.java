@@ -104,4 +104,56 @@ public class Editor {
         return Objects.hash(id);
     }
 
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public final static class Builder {
+        private Long id;
+        private String nome;
+        private String email;
+        private BigDecimal valorPagoPorPalavra;
+        private boolean premium;
+
+        private Builder() {
+
+        }
+
+        public Builder comId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder comNome(String nome) {
+            this.nome = nome;
+            return this;
+        }
+
+        public Builder comEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder comValorPagoPorPalavra(BigDecimal valorPagoPorPalavra) {
+            this.valorPagoPorPalavra = valorPagoPorPalavra;
+            return this;
+        }
+
+        public Builder comPremium(boolean premium) {
+            this.premium = premium;
+            return this;
+        }
+
+        public Editor build() {
+            return new Editor(
+                    this.id,
+                    this.nome,
+                    this.email,
+                    this.valorPagoPorPalavra,
+                    this.premium
+            );
+        }
+    }
+
 }
